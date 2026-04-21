@@ -1,30 +1,83 @@
-# Chatbot Service
+# 🤖 Chatbot Service
 
-Servicio de **chatbot en lenguaje natural** sobre los KPIs del holding.
+Rule-based NLP chatbot with a web UI for querying hotel, restaurant, and real estate KPIs using natural language.
+Runs on **port 8005** · Web UI: `http://localhost:8005/chat`
 
-## Acceso
+---
 
-Abre http://localhost:8005 en tu navegador para la interfaz web.
+## Supported Intents
 
-## API
+| Intent | Example Query |
+|--------|---------------|
+| Hotel occupancy | *"What's our hotel occupancy?"* |
+| Hotel ADR | *"Show me the average daily rate"* |
+| Hotel revenue | *"What's hotel revenue this year?"* |
+| Hotel forecast | *"Forecast occupancy for next 2 weeks"* |
+| Restaurant sales | *"How are restaurant sales?"* |
+| RE units | *"How many units are available?"* |
+| RE funnel | *"Show me the lead conversion funnel"* |
+| Help | *"What can you do?"* |
 
+---
+
+## Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/chat` | Web UI (dark-theme chat interface) |
+| POST | `/chat/message` | JSON API: send a message, get structured response |
+| GET | `/chat/health` | Service health check |
+
+---
+
+## Quick Start (curl)
+
+### 1. Ask via API
 ```bash
-curl -X POST http://localhost:8005/ask \
+curl -s -X POST http://localhost:8005/chat/message \
   -H "Content-Type: application/json" \
-  -d '{"question": "¿Cuál es la ocupación del hotel hoy?"}'
+  -d '{"message": "What is our hotel occupancy rate?"}' | jq
+```
+Sample response:
+```json
+{
+  "intent": "hotel_occupancy",
+  "response": "Current hotel occupancy rate is 74.2%. ADR: $187.35 | RevPAR: $139.02",
+  "data": { "avg_occupancy_rate": 0.742, "avg_adr": 187.35 },
+  "suggestions": ["Show me ADR", "Forecast occupancy", "Restaurant sales"]
+}
 ```
 
-## Preguntas de Ejemplo
+### 2. Ask via gateway (with auth)
+```bash
+TOKEN=$(curl -s -X POST http://localhost:8000/auth/token \
+  -d "username=analyst&password=analyst2024" \
+  -H "Content-Type: application/x-www-form-urlencoded" | jq -r .access_token)
 
-- "¿Cuál fue la ocupación promedio del hotel el último mes?"
-- "¿Qué día de la semana genera más ventas en el restaurante?"
-- "¿Cuántas unidades disponibles hay en el proyecto inmobiliario?"
-- "¿Cuál es el forecast de ocupación del hotel para los próximos 7 días?"
-- "Muestra los productos más vendidos del restaurante"
-- "Muestra el funnel inmobiliario"
+curl -s -X POST http://localhost:8000/chatbot/message \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Lead conversion funnel?"}' | jq
+```
 
-## Arquitectura NLP
+### 3. Open the Web UI
+```bash
+open http://localhost:8005/chat   # macOS
+start http://localhost:8005/chat  # Windows
+```
 
-El chatbot usa clasificación de intents por keywords (sin dependencias externas).
-Puede escalarse fácilmente conectando la API de Claude (Anthropic) como LLM backend
-configurando `ANTHROPIC_API_KEY` en el `.env`.
+---
+
+## Architecture
+
+```
+User message
+    ↓
+Intent classifier (keyword matching + NLP)
+    ↓
+Downstream service call (hotel / restaurant / realestate / analytics)
+    ↓
+Formatted response + suggestion chips
+    ↓
+Chat UI or JSON API
+```

@@ -1,29 +1,68 @@
-# Restaurant Service
+# 🍽️ Restaurant Service
 
-FastAPI microservice for the **Fine Dining Restaurant domain**.
+FastAPI microservice for restaurant sales analytics, menu items, and revenue trends.
+Runs on **port 8002** · Interactive docs: `http://localhost:8002/docs`
+
+---
 
 ## Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Health check |
-| GET | `/restaurant/kpis/daily-sales?date=YYYY-MM-DD` | Daily sales by service |
-| GET | `/restaurant/kpis/weekly-sales?start=&end=` | Weekly breakdown |
-| GET | `/restaurant/kpis/by-service?start=&end=` | Aggregated by service type |
-| GET | `/restaurant/kpis/monthly?year=&month=` | Monthly totals |
-| GET | `/restaurant/kpis/day-of-week?start=&end=` | Sales pattern by weekday |
-| GET | `/restaurant/products/top?period=last_30_days` | Top selling items |
-| GET | `/restaurant/products/margin-by-category?start=&end=` | Margin by category |
-| GET | `/restaurant/products/inventory` | Inventory levels |
+| GET | `/restaurant/kpis/summary` | 24-month revenue summary |
+| GET | `/restaurant/kpis/daily-sales` | Daily sales by service type |
+| GET | `/restaurant/kpis/monthly-sales` | Monthly revenue stacked by service |
+| GET | `/restaurant/kpis/trend` | Rolling daily trend (last N days) |
+| GET | `/restaurant/kpis/top-products` | Top items by revenue |
+| GET | `/restaurant/menu` | Full menu with prices & categories |
 
-## Quick Test
+---
 
+## Quick Start (curl)
+
+### 1. Token (via gateway)
 ```bash
-curl "http://localhost:8002/restaurant/kpis/daily-sales?date=2024-06-15"
-curl "http://localhost:8002/restaurant/products/top?period=last_90_days"
-curl "http://localhost:8002/restaurant/kpis/by-service?start=2024-01-01&end=2024-12-31"
+TOKEN=$(curl -s -X POST http://localhost:8000/auth/token \
+  -d "username=analyst&password=analyst2024" \
+  -H "Content-Type: application/x-www-form-urlencoded" | jq -r .access_token)
 ```
 
-## Interactive Docs
+### 2. Revenue summary
+```bash
+curl -s http://localhost:8000/restaurant/kpis/summary \
+  -H "Authorization: Bearer $TOKEN" | jq
+```
+Sample response:
+```json
+{
+  "total_revenue": 3142800,
+  "total_tickets": 48260,
+  "avg_ticket_value": 65.12,
+  "best_month": "2024-12",
+  "best_month_revenue": 298450
+}
+```
 
-http://localhost:8002/docs
+### 3. Monthly sales by service type
+```bash
+curl -s http://localhost:8000/restaurant/kpis/monthly-sales \
+  -H "Authorization: Bearer $TOKEN" | jq '.monthly_data[:2]'
+```
+
+### 4. Top 10 products
+```bash
+curl -s "http://localhost:8000/restaurant/kpis/top-products?limit=10" \
+  -H "Authorization: Bearer $TOKEN" | jq '.top_products'
+```
+
+### 5. Daily trend (last 30 days)
+```bash
+curl -s "http://localhost:8000/restaurant/kpis/trend?days=30" \
+  -H "Authorization: Bearer $TOKEN" | jq '.daily_trend[-5:]'
+```
+
+### 6. Full menu
+```bash
+curl -s http://localhost:8000/restaurant/menu \
+  -H "Authorization: Bearer $TOKEN" | jq '.items[:5]'
+```

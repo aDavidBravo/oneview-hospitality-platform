@@ -1,29 +1,70 @@
-# Real Estate Service
+# 🏗️ Real Estate Service
 
-FastAPI microservice for the **Real Estate domain**.
+FastAPI microservice for residential/office unit inventory, lead pipeline, and contract revenue.
+Runs on **port 8003** · Interactive docs: `http://localhost:8003/docs`
+
+---
 
 ## Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Health check |
-| GET | `/realestate/kpis/funnel?project_id=` | Funnel stage distribution |
-| GET | `/realestate/kpis/conversion-rates?project_id=` | Conversion rates by stage |
-| GET | `/realestate/kpis/revenue?project_id=` | Revenue & contract summary |
-| GET | `/realestate/kpis/leads-by-channel?project_id=` | Leads & close rate by channel |
-| GET | `/realestate/units/status?project_id=` | Units by type & status |
-| GET | `/realestate/units/available?project_id=&unit_type=` | Available units |
-| GET | `/realestate/projects/` | All projects with stats |
-| GET | `/realestate/projects/{project_id}` | Single project detail |
+| GET | `/realestate/kpis/funnel` | Lead funnel stages & conversion rates |
+| GET | `/realestate/kpis/by-source` | Lead volume & conversion by acquisition channel |
+| GET | `/realestate/kpis/revenue` | Contract revenue summary |
+| GET | `/realestate/kpis/units-status` | Unit inventory by status and project |
+| GET | `/realestate/projects` | Project catalog with details |
 
-## Quick Test
+---
 
+## Quick Start (curl)
+
+### 1. Token
 ```bash
-curl "http://localhost:8003/realestate/kpis/funnel?project_id=1"
-curl "http://localhost:8003/realestate/units/status?project_id=1"
-curl "http://localhost:8003/realestate/projects/"
+TOKEN=$(curl -s -X POST http://localhost:8000/auth/token \
+  -d "username=analyst&password=analyst2024" \
+  -H "Content-Type: application/x-www-form-urlencoded" | jq -r .access_token)
 ```
 
-## Interactive Docs
+### 2. Lead funnel
+```bash
+curl -s http://localhost:8000/realestate/kpis/funnel \
+  -H "Authorization: Bearer $TOKEN" | jq
+```
+Sample response:
+```json
+{
+  "overall_conversion_rate": 18.4,
+  "funnel_stages": [
+    { "stage": "new",        "count": 640 },
+    { "stage": "contacted",  "count": 498 },
+    { "stage": "visit",      "count": 312 },
+    { "stage": "negotiation","count": 156 },
+    { "stage": "signed",     "count": 118 }
+  ]
+}
+```
 
-http://localhost:8003/docs
+### 3. Unit inventory
+```bash
+curl -s http://localhost:8000/realestate/kpis/units-status \
+  -H "Authorization: Bearer $TOKEN" | jq
+```
+
+### 4. Contract revenue
+```bash
+curl -s http://localhost:8000/realestate/kpis/revenue \
+  -H "Authorization: Bearer $TOKEN" | jq
+```
+
+### 5. Projects
+```bash
+curl -s http://localhost:8000/realestate/projects \
+  -H "Authorization: Bearer $TOKEN" | jq '.projects'
+```
+
+### 6. Leads by acquisition source
+```bash
+curl -s http://localhost:8000/realestate/kpis/by-source \
+  -H "Authorization: Bearer $TOKEN" | jq '.sources'
+```
