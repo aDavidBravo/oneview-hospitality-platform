@@ -1,0 +1,5 @@
+pandas==2.1.4
+psycopg2-binary==2.9.9
+numpy==1.26.2
+sqlalchemy==2.0.23
+faker==22.0.0
