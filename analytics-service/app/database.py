@@ -2,10 +2,10 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL",
-    "postgresql://oneview_user:oneview_secret_2024@postgres:5432/oneview")
-MODELS_PATH = os.getenv("MODELS_PATH", "/app/models")
-FORECAST_HORIZON = int(os.getenv("FORECAST_HORIZON_DAYS", 14))
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://oneview:oneview_secure_2024@localhost:5432/oneview_db')
+MODEL_PATH = os.getenv('MODEL_PATH', '/app/models')
+
+os.makedirs(MODEL_PATH, exist_ok=True)
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
