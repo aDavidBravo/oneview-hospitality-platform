@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneView — AI Chatbot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500&display=swap');
+  :root {
+    --gold: #c9a84c;
+    --dark: #0d1117;
+    --card: #161b22;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --user-bg: #1f2937;
+    --bot-bg: #0f1e2e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; height: 100vh; display: flex; flex-direction: column; }
+  header { padding: 18px 24px; border-bottom: 1px solid rgba(201,168,76,0.3); background: var(--card); display: flex; align-items: center; gap: 14px; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); }
+  header span { font-size: 0.78rem; color: var(--muted); }
+  #chat { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .bubble { max-width: 75%; padding: 14px 18px; border-radius: 12px; line-height: 1.6; font-size: 0.9rem; white-space: pre-wrap; }
+  .user   { background: var(--user-bg); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .bot    { background: var(--bot-bg); align-self: flex-start; border-bottom-left-radius: 4px; border-left: 3px solid var(--gold); }
+  .typing { opacity: 0.5; font-style: italic; }
+  form { display: flex; gap: 10px; padding: 14px 24px; border-top: 1px solid rgba(255,255,255,0.06); background: var(--card); }
+  input { flex: 1; padding: 12px 16px; background: #21262d; border: 1px solid #30363d; border-radius: 8px; color: var(--text); font-size: 0.9rem; outline: none; }
+  input:focus { border-color: var(--gold); }
+  button { padding: 12px 22px; background: var(--gold); color: #000; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  .suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: #21262d; border: 1px solid #30363d; padding: 6px 14px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; color: var(--muted); transition: 0.2s; }
+  .chip:hover { border-color: var(--gold); color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <span style="font-size:1.8rem">&#127968;</span>
+  <div>
+    <h1>OneView AI Assistant</h1>
+    <span>Tu asistente inteligente del holding &mdash; Hotel &bull; Restaurante &bull; Inmobiliaria</span>
+  </div>
+</header>
+
+<div id="chat">
+  <div class="bubble bot">👋 Hola, soy el asistente de OneView. Puedo responder preguntas sobre:
+• Ocupación y KPIs del hotel
+• Ventas y productos del restaurante
+• Estado de unidades y funnel inmobiliario
+
+Intenta una de las sugerencias o escribe tu propia pregunta.</div>
+  <div class="suggestions">
+    <div class="chip" onclick="send('¿Cuál es la ocupación del hotel hoy?')">🏨 Ocupación hoy</div>
+    <div class="chip" onclick="send('¿Cuál es el forecast de ocupación?')">🔮 Forecast ocupación</div>
+    <div class="chip" onclick="send('Muestra los productos más vendidos del restaurante')">🍽️ Top productos</div>
+    <div class="chip" onclick="send('Ventas del restaurante por servicio')">📊 Ventas restaurante</div>
+    <div class="chip" onclick="send('¿Cuántas unidades disponibles hay?')">🏢 Unidades</div>
+    <div class="chip" onclick="send('Muestra el funnel inmobiliario')">📈 Funnel leads</div>
+  </div>
+</div>
+
+<form onsubmit="handleSubmit(event)">
+  <input id="inp" type="text" placeholder="Ej: ¿Cuál fue la ocupación del hotel el último mes?" autocomplete="off">
+  <button type="submit">Enviar</button>
+</form>
+
+<script>
+async function send(text) {
+  const inp = document.getElementById('inp');
+  inp.value = text;
+  await handleSubmit({ preventDefault: () => {} });
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const inp = document.getElementById('inp');
+  const question = inp.value.trim();
+  if (!question) return;
+
+  addBubble(question, 'user');
+  inp.value = '';
+  const typing = addBubble('Analizando...', 'bot typing');
+
+  try {
+    const res = await fetch('/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    typing.remove();
+    addBubble(data.answer, 'bot');
+  } catch (err) {
+    typing.remove();
+    addBubble('Error al conectar con los servicios. Verifica que Docker esté corriendo.', 'bot');
+  }
+}
+
+function addBubble(text, cls) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'bubble ' + cls;
+  div.textContent = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+</script>
+</body>
+</html>
