@@ -1,0 +1,110 @@
+<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Hotel Dashboard — OneView Platform</title>
+  <desc>Hotel KPI dashboard showing occupancy rate, ADR, RevPAR, revenue cards and occupancy/ADR chart</desc>
+  <rect width="900" height="520" fill="#0f1117" rx="12"/>
+  <rect x="0" y="0" width="160" height="520" fill="#161926" rx="12"/>
+  <rect x="148" y="0" width="12" height="520" fill="#161926"/>
+  <text x="20" y="34" fill="#ffffff" font-family="Inter,sans-serif" font-size="14" font-weight="700">OneView</text>
+  <text x="20" y="48" fill="#475569" font-family="Inter,sans-serif" font-size="9">Hospitality Platform</text>
+  <rect x="10" y="62" width="140" height="26" rx="6" fill="transparent"/>
+  <text x="20" y="79" fill="#64748b" font-family="Inter,sans-serif" font-size="12">&#127968; Overview</text>
+  <rect x="10" y="94" width="140" height="26" rx="6" fill="rgba(99,102,241,0.18)"/>
+  <text x="20" y="111" fill="#818cf8" font-family="Inter,sans-serif" font-size="12" font-weight="600">&#127976; Hotel</text>
+  <rect x="10" y="126" width="140" height="26" rx="6" fill="transparent"/>
+  <text x="20" y="143" fill="#64748b" font-family="Inter,sans-serif" font-size="12">&#127869; Restaurant</text>
+  <rect x="10" y="158" width="140" height="26" rx="6" fill="transparent"/>
+  <text x="20" y="175" fill="#64748b" font-family="Inter,sans-serif" font-size="12">&#127959; Real Estate</text>
+  <text x="182" y="38" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="20" font-weight="700">Hotel Dashboard</text>
+  <text x="182" y="56" fill="#64748b" font-family="Inter,sans-serif" font-size="11">January 2023 - December 2024  |  Live data via FastAPI</text>
+  <rect x="182" y="70" width="136" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="182" y="70" width="136" height="3" rx="2" fill="#38bdf8"/>
+  <text x="192" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Avg Occupancy</text>
+  <text x="192" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">74.2%</text>
+  <rect x="192" y="122" width="52" height="14" rx="7" fill="rgba(34,197,94,0.15)"/>
+  <text x="218" y="132" text-anchor="middle" fill="#22c55e" font-family="Inter,sans-serif" font-size="9" font-weight="700">+ 3.1%</text>
+  <rect x="326" y="70" width="136" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="326" y="70" width="136" height="3" rx="2" fill="#818cf8"/>
+  <text x="336" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Avg Daily Rate</text>
+  <text x="336" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$187.35</text>
+  <rect x="336" y="122" width="52" height="14" rx="7" fill="rgba(34,197,94,0.15)"/>
+  <text x="362" y="132" text-anchor="middle" fill="#22c55e" font-family="Inter,sans-serif" font-size="9" font-weight="700">+ 5.7%</text>
+  <rect x="470" y="70" width="136" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="470" y="70" width="136" height="3" rx="2" fill="#f59e0b"/>
+  <text x="480" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">RevPAR</text>
+  <text x="480" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$139.02</text>
+  <rect x="480" y="122" width="52" height="14" rx="7" fill="rgba(34,197,94,0.15)"/>
+  <text x="506" y="132" text-anchor="middle" fill="#22c55e" font-family="Inter,sans-serif" font-size="9" font-weight="700">+ 4.2%</text>
+  <rect x="614" y="70" width="136" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="614" y="70" width="136" height="3" rx="2" fill="#f43f5e"/>
+  <text x="624" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Total Revenue</text>
+  <text x="624" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$4.2M</text>
+  <text x="624" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">24-month period</text>
+  <rect x="756" y="70" width="126" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="756" y="70" width="126" height="3" rx="2" fill="#a78bfa"/>
+  <text x="766" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Reservations</text>
+  <text x="766" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">15,340</text>
+  <text x="766" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">Confirmed + checked out</text>
+  <rect x="182" y="160" width="400" height="180" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">MONTHLY OCCUPANCY &amp; ADR</text>
+  <text x="196" y="202" fill="#475569" font-family="Inter,sans-serif" font-size="9">100%</text>
+  <text x="196" y="232" fill="#475569" font-family="Inter,sans-serif" font-size="9">75%</text>
+  <text x="196" y="262" fill="#475569" font-family="Inter,sans-serif" font-size="9">50%</text>
+  <text x="196" y="292" fill="#475569" font-family="Inter,sans-serif" font-size="9">25%</text>
+  <line x1="222" y1="197" x2="570" y2="197" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="222" y1="227" x2="570" y2="227" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="222" y1="257" x2="570" y2="257" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="222" y1="287" x2="570" y2="287" stroke="#2d3148" stroke-width="0.5"/>
+  <path d="M228,243 L255,235 L282,228 L309,220 L336,218 L363,225 L390,215 L417,208 L444,212 L471,220 L498,224 L525,210 L552,216 L568,222 L568,295 L228,295 Z" fill="rgba(56,189,248,0.15)" stroke="none"/>
+  <path d="M228,243 L255,235 L282,228 L309,220 L336,218 L363,225 L390,215 L417,208 L444,212 L471,220 L498,224 L525,210 L552,216 L568,222" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M228,268 L255,262 L282,255 L309,248 L336,245 L363,252 L390,242 L417,238 L444,240 L471,248 L498,244 L525,236 L552,240 L568,244" fill="none" stroke="#818cf8" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5,3"/>
+  <text x="228" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Jan</text>
+  <text x="282" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Mar</text>
+  <text x="336" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">May</text>
+  <text x="390" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Jul</text>
+  <text x="444" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Sep</text>
+  <text x="498" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Nov</text>
+  <text x="552" y="308" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Jan</text>
+  <rect x="196" y="317" width="10" height="3" rx="1" fill="#38bdf8"/>
+  <text x="210" y="321" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Occupancy</text>
+  <rect x="270" y="317" width="10" height="2" rx="1" fill="#818cf8"/>
+  <text x="284" y="321" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">ADR</text>
+  <rect x="590" y="160" width="292" height="180" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="604" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">BOOKINGS BY CHANNEL</text>
+  <text x="670" y="204" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Direct</text>
+  <rect x="674" y="194" width="158" height="14" rx="3" fill="#38bdf8"/>
+  <text x="838" y="205" fill="#64748b" font-family="Inter,sans-serif" font-size="9">4,820</text>
+  <text x="670" y="228" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">OTA</text>
+  <rect x="674" y="218" width="130" height="14" rx="3" fill="#818cf8"/>
+  <text x="810" y="229" fill="#64748b" font-family="Inter,sans-serif" font-size="9">3,980</text>
+  <text x="670" y="252" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Corporate</text>
+  <rect x="674" y="242" width="105" height="14" rx="3" fill="#f59e0b"/>
+  <text x="785" y="253" fill="#64748b" font-family="Inter,sans-serif" font-size="9">3,210</text>
+  <text x="670" y="276" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Travel Agency</text>
+  <rect x="674" y="266" width="82" height="14" rx="3" fill="#10b981"/>
+  <text x="762" y="277" fill="#64748b" font-family="Inter,sans-serif" font-size="9">2,505</text>
+  <text x="670" y="300" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Walk-in</text>
+  <rect x="674" y="290" width="56" height="14" rx="3" fill="#f43f5e"/>
+  <text x="736" y="301" fill="#64748b" font-family="Inter,sans-serif" font-size="9">1,720</text>
+  <rect x="182" y="354" width="700" height="140" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="374" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">14-DAY ML OCCUPANCY FORECAST</text>
+  <rect x="580" y="364" width="148" height="16" rx="4" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+  <text x="654" y="375" text-anchor="middle" fill="#10b981" font-family="Inter,sans-serif" font-size="9">GradientBoosting - MAE 3.8%</text>
+  <path d="M204,445 L252,436 L300,428 L348,435 L396,420 L444,415 L492,422 L540,410 L588,418 L636,412 L684,420 L732,408 L780,416 L828,422 L828,468 L204,468 Z" fill="rgba(16,185,129,0.12)" stroke="none"/>
+  <path d="M204,445 L252,436 L300,428 L348,435 L396,420 L444,415 L492,422 L540,410 L588,418 L636,412 L684,420 L732,408 L780,416 L828,422" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="204" cy="445" r="3.5" fill="#10b981"/><circle cx="252" cy="436" r="3.5" fill="#10b981"/><circle cx="300" cy="428" r="3.5" fill="#10b981"/><circle cx="348" cy="435" r="3.5" fill="#10b981"/><circle cx="396" cy="420" r="3.5" fill="#10b981"/><circle cx="444" cy="415" r="3.5" fill="#10b981"/><circle cx="492" cy="422" r="3.5" fill="#10b981"/><circle cx="540" cy="410" r="3.5" fill="#10b981"/><circle cx="588" cy="418" r="3.5" fill="#10b981"/><circle cx="636" cy="412" r="3.5" fill="#10b981"/><circle cx="684" cy="420" r="3.5" fill="#10b981"/><circle cx="732" cy="408" r="3.5" fill="#10b981"/><circle cx="780" cy="416" r="3.5" fill="#10b981"/><circle cx="828" cy="422" r="3.5" fill="#10b981"/>
+  <line x1="196" y1="384" x2="870" y2="384" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="410" x2="870" y2="410" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="436" x2="870" y2="436" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="462" x2="870" y2="462" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="194" y="387" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">90%</text>
+  <text x="194" y="413" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">75%</text>
+  <text x="194" y="439" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">60%</text>
+  <text x="204" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+1</text>
+  <text x="300" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+3</text>
+  <text x="396" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+5</text>
+  <text x="492" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+7</text>
+  <text x="588" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+9</text>
+  <text x="684" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+11</text>
+  <text x="780" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+13</text>
+  <text x="828" y="480" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="9">D+14</text>
+</svg>
