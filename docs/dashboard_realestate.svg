@@ -1,0 +1,82 @@
+<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Real Estate Dashboard — OneView Platform</title>
+  <desc>Real estate analytics: lead funnel, unit status donut chart, and AI lead scoring table</desc>
+  <rect width="900" height="520" fill="#0f1117" rx="12"/>
+  <rect x="0" y="0" width="160" height="520" fill="#161926" rx="12"/>
+  <rect x="148" y="0" width="12" height="520" fill="#161926"/>
+  <text x="20" y="34" fill="#ffffff" font-family="Inter,sans-serif" font-size="14" font-weight="700">OneView</text>
+  <text x="20" y="48" fill="#475569" font-family="Inter,sans-serif" font-size="9">Hospitality Platform</text>
+  <rect x="10" y="158" width="140" height="26" rx="6" fill="rgba(99,102,241,0.18)"/>
+  <text x="20" y="175" fill="#818cf8" font-family="Inter,sans-serif" font-size="12" font-weight="600">Real Estate</text>
+  <text x="20" y="111" fill="#64748b" font-family="Inter,sans-serif" font-size="12">Hotel</text>
+  <text x="20" y="143" fill="#64748b" font-family="Inter,sans-serif" font-size="12">Restaurant</text>
+  <text x="182" y="38" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="20" font-weight="700">Real Estate Dashboard</text>
+  <text x="182" y="56" fill="#64748b" font-family="Inter,sans-serif" font-size="11">3 projects · 260 units · AI lead scoring (GBC · ROC-AUC 0.83)</text>
+  <rect x="182" y="70" width="148" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="182" y="70" width="148" height="3" rx="2" fill="#10b981"/>
+  <text x="192" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Contract Revenue</text>
+  <text x="192" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$18.4M</text>
+  <rect x="338" y="70" width="130" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="338" y="70" width="130" height="3" rx="2" fill="#38bdf8"/>
+  <text x="348" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Units Sold</text>
+  <text x="348" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">118</text>
+  <text x="348" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">of 260 total</text>
+  <rect x="476" y="70" width="130" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="476" y="70" width="130" height="3" rx="2" fill="#818cf8"/>
+  <text x="486" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Units Available</text>
+  <text x="486" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">94</text>
+  <rect x="614" y="70" width="145" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="614" y="70" width="145" height="3" rx="2" fill="#f59e0b"/>
+  <text x="624" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Funnel Conversion</text>
+  <text x="624" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">18.4%</text>
+  <rect x="767" y="70" width="115" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="767" y="70" width="115" height="3" rx="2" fill="#a78bfa"/>
+  <text x="777" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Avg Contract</text>
+  <text x="777" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$156k</text>
+  <rect x="182" y="160" width="300" height="200" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">LEAD CONVERSION FUNNEL</text>
+  <text x="268" y="207" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">New leads</text><rect x="270" y="196" width="168" height="16" rx="3" fill="#818cf8"/><text x="444" y="207" fill="#64748b" font-family="Inter,sans-serif" font-size="9">  640</text><text x="470" y="207" fill="#475569" font-family="Inter,sans-serif" font-size="9">100%</text>
+  <text x="268" y="231" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Contacted</text><rect x="270" y="220" width="130" height="16" rx="3" fill="#38bdf8"/><text x="406" y="231" fill="#64748b" font-family="Inter,sans-serif" font-size="9">  498</text><text x="444" y="231" fill="#475569" font-family="Inter,sans-serif" font-size="9">77.8%</text>
+  <text x="268" y="255" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Property visit</text><rect x="270" y="244" width="82" height="16" rx="3" fill="#10b981"/><text x="358" y="255" fill="#64748b" font-family="Inter,sans-serif" font-size="9">  312</text><text x="396" y="255" fill="#475569" font-family="Inter,sans-serif" font-size="9">48.8%</text>
+  <text x="268" y="279" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Negotiation</text><rect x="270" y="268" width="51" height="16" rx="3" fill="#f59e0b"/><text x="327" y="279" fill="#64748b" font-family="Inter,sans-serif" font-size="9">  156</text><text x="365" y="279" fill="#475569" font-family="Inter,sans-serif" font-size="9">24.4%</text>
+  <text x="268" y="303" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Signed</text><rect x="270" y="292" width="31" height="16" rx="3" fill="#f43f5e"/><text x="307" y="303" fill="#64748b" font-family="Inter,sans-serif" font-size="9">  118</text><text x="345" y="303" fill="#475569" font-family="Inter,sans-serif" font-size="9">18.4%</text>
+  <rect x="196" y="318" width="120" height="26" rx="5" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+  <text x="256" y="330" text-anchor="middle" fill="#10b981" font-family="Inter,sans-serif" font-size="9" font-weight="600">Overall conversion: 18.4%</text>
+  <text x="256" y="340" text-anchor="middle" fill="#10b981" font-family="Inter,sans-serif" font-size="8">GradientBoosting Classifier</text>
+  <rect x="490" y="160" width="392" height="200" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="504" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">UNITS BY STATUS — ALL PROJECTS</text>
+  <g transform="translate(608,270)">
+    <path d="M0,0 L0,-80 A80,80 0 0,1 69.3,-40 Z" fill="#10b981" opacity="0.85"/>
+    <path d="M0,0 L69.3,-40 A80,80 0 0,1 69.3,40 Z" fill="#38bdf8" opacity="0.85"/>
+    <path d="M0,0 L69.3,40 A80,80 0 0,1 -20,77 Z" fill="#f59e0b" opacity="0.85"/>
+    <path d="M0,0 L-20,77 A80,80 0 0,1 0,-80 Z" fill="#ef4444" opacity="0.7"/>
+    <circle cx="0" cy="0" r="48" fill="#1e2130"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="20" font-weight="700">260</text>
+    <text x="0" y="12" text-anchor="middle" fill="#64748b" font-family="Inter,sans-serif" font-size="9">units</text>
+  </g>
+  <rect x="718" y="208" width="10" height="10" rx="2" fill="#10b981"/><text x="733" y="218" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Available</text><text x="850" y="218" text-anchor="end" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="10" font-weight="600">94</text>
+  <rect x="718" y="234" width="10" height="10" rx="2" fill="#38bdf8"/><text x="733" y="244" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Sold</text><text x="850" y="244" text-anchor="end" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="10" font-weight="600">118</text>
+  <rect x="718" y="260" width="10" height="10" rx="2" fill="#f59e0b"/><text x="733" y="270" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Reserved</text><text x="850" y="270" text-anchor="end" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="10" font-weight="600">38</text>
+  <rect x="718" y="286" width="10" height="10" rx="2" fill="#ef4444"/><text x="733" y="296" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Unavailable</text><text x="850" y="296" text-anchor="end" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="10" font-weight="600">10</text>
+  <rect x="182" y="374" width="700" height="130" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="393" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">AI LEAD SCORING — TOP PROSPECTS</text>
+  <rect x="610" y="382" width="200" height="16" rx="4" fill="rgba(163,139,250,0.1)" stroke="rgba(163,139,250,0.3)" stroke-width="0.5"/>
+  <text x="710" y="393" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-size="9">GradientBoost Classifier · ROC-AUC 0.83</text>
+  <rect x="182" y="400" width="700" height="18" rx="0" fill="#161926"/>
+  <text x="196" y="413" fill="#64748b" font-family="Inter,sans-serif" font-size="9" font-weight="600">LEAD</text>
+  <text x="286" y="413" fill="#64748b" font-family="Inter,sans-serif" font-size="9" font-weight="600">PROJECT</text>
+  <text x="420" y="413" fill="#64748b" font-family="Inter,sans-serif" font-size="9" font-weight="600">SOURCE</text>
+  <text x="530" y="413" fill="#64748b" font-family="Inter,sans-serif" font-size="9" font-weight="600">STATUS</text>
+  <text x="660" y="413" fill="#64748b" font-family="Inter,sans-serif" font-size="9" font-weight="600">CONVERSION %</text>
+  <line x1="182" y1="436" x2="882" y2="436" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="430" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">#1047</text><text x="286" y="430" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Torre Mirador</text><text x="420" y="430" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Referral</text><text x="530" y="430" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Negotiation</text>
+  <text x="660" y="430" fill="#10b981" font-family="Inter,sans-serif" font-size="9" font-weight="700">91%</text><rect x="690" y="424" width="128" height="6" rx="3" fill="#2d3148"/><rect x="690" y="424" width="117" height="6" rx="3" fill="#10b981"/>
+  <line x1="182" y1="454" x2="882" y2="454" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="448" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">#892</text><text x="286" y="448" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Residencias Del Sol</text><text x="420" y="448" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Corporate</text><text x="530" y="448" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Visit</text>
+  <text x="660" y="448" fill="#10b981" font-family="Inter,sans-serif" font-size="9" font-weight="700">78%</text><rect x="690" y="442" width="128" height="6" rx="3" fill="#2d3148"/><rect x="690" y="442" width="100" height="6" rx="3" fill="#10b981"/>
+  <line x1="182" y1="472" x2="882" y2="472" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="466" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">#1231</text><text x="286" y="466" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Torre Mirador</text><text x="420" y="466" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">LinkedIn</text><text x="530" y="466" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Contacted</text>
+  <text x="660" y="466" fill="#f59e0b" font-family="Inter,sans-serif" font-size="9" font-weight="700">54%</text><rect x="690" y="460" width="128" height="6" rx="3" fill="#2d3148"/><rect x="690" y="460" width="69" height="6" rx="3" fill="#f59e0b"/>
+  <text x="196" y="484" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">#778</text><text x="286" y="484" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Parque Urbano</text><text x="420" y="484" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Web</text><text x="530" y="484" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">New</text>
+  <text x="660" y="484" fill="#ef4444" font-family="Inter,sans-serif" font-size="9" font-weight="700">23%</text><rect x="690" y="478" width="128" height="6" rx="3" fill="#2d3148"/><rect x="690" y="478" width="29" height="6" rx="3" fill="#ef4444"/>
+</svg>

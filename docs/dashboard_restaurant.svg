@@ -1,0 +1,83 @@
+<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Restaurant Dashboard — OneView Platform</title>
+  <desc>Restaurant analytics: stacked monthly revenue by service type, top products, and daily trend</desc>
+  <rect width="900" height="520" fill="#0f1117" rx="12"/>
+  <rect x="0" y="0" width="160" height="520" fill="#161926" rx="12"/>
+  <rect x="148" y="0" width="12" height="520" fill="#161926"/>
+  <text x="20" y="34" fill="#ffffff" font-family="Inter,sans-serif" font-size="14" font-weight="700">OneView</text>
+  <text x="20" y="48" fill="#475569" font-family="Inter,sans-serif" font-size="9">Hospitality Platform</text>
+  <rect x="10" y="94" width="140" height="26" rx="6" fill="rgba(99,102,241,0.18)"/>
+  <text x="20" y="111" fill="#818cf8" font-family="Inter,sans-serif" font-size="12" font-weight="600">Restaurant</text>
+  <text x="20" y="143" fill="#64748b" font-family="Inter,sans-serif" font-size="12">Hotel</text>
+  <text x="20" y="175" fill="#64748b" font-family="Inter,sans-serif" font-size="12">Real Estate</text>
+  <text x="182" y="38" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="20" font-weight="700">Restaurant Dashboard</text>
+  <text x="182" y="56" fill="#64748b" font-family="Inter,sans-serif" font-size="11">5 service types · 25 menu items · Bolivian seasonal patterns</text>
+  <rect x="182" y="70" width="165" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="182" y="70" width="165" height="3" rx="2" fill="#f59e0b"/>
+  <text x="192" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Total Revenue (2yr)</text>
+  <text x="192" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$3.14M</text>
+  <text x="192" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">All service types</text>
+  <rect x="355" y="70" width="155" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="355" y="70" width="155" height="3" rx="2" fill="#38bdf8"/>
+  <text x="365" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Total Tickets</text>
+  <text x="365" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">48,260</text>
+  <text x="365" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">All service types</text>
+  <rect x="518" y="70" width="155" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="518" y="70" width="155" height="3" rx="2" fill="#818cf8"/>
+  <text x="528" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Avg Ticket Value</text>
+  <text x="528" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$65.12</text>
+  <rect x="681" y="70" width="201" height="76" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <rect x="681" y="70" width="201" height="3" rx="2" fill="#10b981"/>
+  <text x="691" y="91" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Best Month</text>
+  <text x="691" y="116" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="22" font-weight="700">$298,450</text>
+  <text x="691" y="132" fill="#64748b" font-family="Inter,sans-serif" font-size="10">December 2024</text>
+  <rect x="182" y="160" width="390" height="210" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">MONTHLY REVENUE BY SERVICE TYPE</text>
+  <line x1="230" y1="192" x2="560" y2="192" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="230" y1="222" x2="560" y2="222" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="230" y1="252" x2="560" y2="252" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="230" y1="282" x2="560" y2="282" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="228" y="195" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">300k</text>
+  <text x="228" y="225" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">200k</text>
+  <text x="228" y="255" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">100k</text>
+  <rect x="235" y="345" width="20" height="10" fill="#f59e0b"/><rect x="235" y="325" width="20" height="20" fill="#38bdf8"/><rect x="235" y="290" width="20" height="35" fill="#818cf8"/><rect x="235" y="278" width="20" height="12" fill="#f43f5e"/><rect x="235" y="270" width="20" height="8" fill="#10b981"/>
+  <text x="245" y="360" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="8">J</text>
+  <rect x="260" y="342" width="20" height="13" fill="#f59e0b"/><rect x="260" y="320" width="20" height="22" fill="#38bdf8"/><rect x="260" y="283" width="20" height="37" fill="#818cf8"/><rect x="260" y="270" width="20" height="13" fill="#f43f5e"/><rect x="260" y="262" width="20" height="8" fill="#10b981"/>
+  <text x="270" y="360" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="8">F</text>
+  <rect x="285" y="340" width="20" height="15" fill="#f59e0b"/><rect x="285" y="316" width="20" height="24" fill="#38bdf8"/><rect x="285" y="278" width="20" height="38" fill="#818cf8"/><rect x="285" y="265" width="20" height="13" fill="#f43f5e"/><rect x="285" y="257" width="20" height="8" fill="#10b981"/>
+  <text x="295" y="360" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="8">M</text>
+  <rect x="385" y="333" width="20" height="22" fill="#f59e0b"/><rect x="385" y="307" width="20" height="26" fill="#38bdf8"/><rect x="385" y="265" width="20" height="42" fill="#818cf8"/><rect x="385" y="251" width="20" height="14" fill="#f43f5e"/><rect x="385" y="242" width="20" height="9" fill="#10b981"/>
+  <text x="395" y="360" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="8">J</text>
+  <rect x="510" y="328" width="20" height="27" fill="#f59e0b"/><rect x="510" y="298" width="20" height="30" fill="#38bdf8"/><rect x="510" y="252" width="20" height="46" fill="#818cf8"/><rect x="510" y="237" width="20" height="15" fill="#f43f5e"/><rect x="510" y="228" width="20" height="9" fill="#10b981"/>
+  <text x="520" y="360" text-anchor="middle" fill="#475569" font-family="Inter,sans-serif" font-size="8">D</text>
+  <rect x="505" y="220" width="30" height="10" rx="3" fill="rgba(16,185,129,0.2)"/>
+  <text x="520" y="228" text-anchor="middle" fill="#10b981" font-family="Inter,sans-serif" font-size="7">best</text>
+  <rect x="196" y="366" width="8" height="8" rx="1" fill="#f59e0b"/><text x="208" y="373" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Breakfast</text>
+  <rect x="266" y="366" width="8" height="8" rx="1" fill="#38bdf8"/><text x="278" y="373" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Lunch</text>
+  <rect x="320" y="366" width="8" height="8" rx="1" fill="#818cf8"/><text x="332" y="373" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Dinner</text>
+  <rect x="380" y="366" width="8" height="8" rx="1" fill="#f43f5e"/><text x="392" y="373" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Bar</text>
+  <rect x="420" y="366" width="8" height="8" rx="1" fill="#10b981"/><text x="432" y="373" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Room Service</text>
+  <rect x="580" y="160" width="302" height="210" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="594" y="180" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">TOP 8 PRODUCTS BY REVENUE</text>
+  <text x="700" y="200" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Beef Tenderloin</text><rect x="702" y="190" width="134" height="12" rx="3" fill="#818cf8"/><text x="840" y="200" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$124k</text>
+  <text x="700" y="218" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Salmon Fillet</text><rect x="702" y="208" width="112" height="12" rx="3" fill="#38bdf8"/><text x="818" y="218" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$104k</text>
+  <text x="700" y="236" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Ribeye Steak</text><rect x="702" y="226" width="98" height="12" rx="3" fill="#f59e0b"/><text x="804" y="236" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$91k</text>
+  <text x="700" y="254" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Lobster Bisque</text><rect x="702" y="244" width="84" height="12" rx="3" fill="#10b981"/><text x="790" y="254" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$78k</text>
+  <text x="700" y="272" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Truffle Risotto</text><rect x="702" y="262" width="72" height="12" rx="3" fill="#f43f5e"/><text x="778" y="272" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$67k</text>
+  <text x="700" y="290" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Craft Cocktails</text><rect x="702" y="280" width="61" height="12" rx="3" fill="#a78bfa"/><text x="767" y="290" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$57k</text>
+  <text x="700" y="308" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Duck Confit</text><rect x="702" y="298" width="52" height="12" rx="3" fill="#34d399"/><text x="758" y="308" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$48k</text>
+  <text x="700" y="326" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">Tasting Menu</text><rect x="702" y="316" width="44" height="12" rx="3" fill="#fbbf24"/><text x="750" y="326" fill="#64748b" font-family="Inter,sans-serif" font-size="8">$41k</text>
+  <rect x="182" y="384" width="700" height="118" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="196" y="402" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="1">DAILY REVENUE TREND — LAST 60 DAYS</text>
+  <line x1="196" y1="414" x2="870" y2="414" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="434" x2="870" y2="434" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="454" x2="870" y2="454" stroke="#2d3148" stroke-width="0.5"/>
+  <line x1="196" y1="474" x2="870" y2="474" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="194" y="417" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">15k</text>
+  <text x="194" y="437" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">10k</text>
+  <text x="194" y="457" text-anchor="end" fill="#475569" font-family="Inter,sans-serif" font-size="9">5k</text>
+  <path d="M200,460 L224,452 L248,448 L272,442 L296,436 L320,430 L344,425 L368,420 L392,416 L416,412 L440,406 L464,401 L488,396 L512,392 L536,388 L560,384 L584,380 L608,376 L632,373 L656,370 L680,367 L704,364 L728,362 L752,360 L776,358 L800,356 L824,354 L848,352 L860,350" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/>
+  <text x="200" y="494" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">D-60</text>
+  <text x="490" y="494" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">D-20</text>
+  <text x="860" y="494" fill="#475569" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">Today</text>
+</svg>

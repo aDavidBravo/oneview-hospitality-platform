@@ -1,0 +1,69 @@
+<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>AI Chatbot Interface — OneView Platform</title>
+  <desc>NLP chatbot web UI showing natural language queries about hotel, restaurant and real estate KPIs</desc>
+  <rect width="900" height="520" fill="#0f1117" rx="12"/>
+  <rect x="0" y="0" width="900" height="50" fill="#161926" rx="12"/>
+  <rect x="0" y="38" width="900" height="12" fill="#161926"/>
+  <circle cx="26" cy="24" r="6" fill="#ef4444" opacity="0.7"/>
+  <circle cx="46" cy="24" r="6" fill="#f59e0b" opacity="0.7"/>
+  <circle cx="66" cy="24" r="6" fill="#10b981" opacity="0.7"/>
+  <text x="450" y="29" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="13" font-weight="600">OneView AI Assistant — localhost:8005/chat</text>
+  <rect x="0" y="50" width="900" height="52" fill="#161926"/>
+  <circle cx="56" cy="76" r="18" fill="#6366f1" opacity="0.2"/>
+  <text x="56" y="82" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="16">AI</text>
+  <text x="84" y="70" fill="#f1f5f9" font-family="Inter,sans-serif" font-size="14" font-weight="700">OneView Assistant</text>
+  <text x="84" y="86" fill="#64748b" font-family="Inter,sans-serif" font-size="11">Hotel · Restaurant · Real Estate · ML Forecasts</text>
+  <rect x="794" y="62" width="86" height="26" rx="6" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+  <circle cx="808" cy="75" r="4" fill="#10b981"/>
+  <text x="838" y="79" text-anchor="middle" fill="#10b981" font-family="Inter,sans-serif" font-size="10" font-weight="600">Online</text>
+  <line x1="0" y1="102" x2="900" y2="102" stroke="#2d3148" stroke-width="0.5"/>
+  <circle cx="34" cy="126" r="14" fill="#1e2130" stroke="#6366f1" stroke-width="1"/>
+  <text x="34" y="131" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="12">AI</text>
+  <rect x="54" y="110" width="540" height="36" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="66" y="125" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="11">Hola! Soy el asistente de OneView. Puedo consultarte KPIs de hotel, restaurante, inmobiliaria y</text>
+  <text x="66" y="140" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="11">pronosticos de IA. En que puedo ayudarte hoy?</text>
+  <rect x="560" y="156" width="294" height="24" rx="8" fill="#6366f1"/>
+  <text x="700" y="172" text-anchor="middle" fill="#ffffff" font-family="Inter,sans-serif" font-size="11">Cual es la ocupacion del hotel?</text>
+  <circle cx="872" cy="168" r="14" fill="#6366f1" opacity="0.3" stroke="#6366f1" stroke-width="1"/>
+  <text x="872" y="173" text-anchor="middle" fill="#a5b4fc" font-family="Inter,sans-serif" font-size="10">Tu</text>
+  <circle cx="34" cy="216" r="14" fill="#1e2130" stroke="#6366f1" stroke-width="1"/>
+  <text x="34" y="221" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="12">AI</text>
+  <rect x="54" y="192" width="580" height="70" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="66" y="208" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600">Hotel — Ocupacion actual</text>
+  <rect x="66" y="212" width="80" height="36" rx="5" fill="#161926"/>
+  <text x="106" y="224" text-anchor="middle" fill="#64748b" font-family="Inter,sans-serif" font-size="8">Ocupacion</text>
+  <text x="106" y="238" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="700">74.2%</text>
+  <rect x="156" y="212" width="80" height="36" rx="5" fill="#161926"/>
+  <text x="196" y="224" text-anchor="middle" fill="#64748b" font-family="Inter,sans-serif" font-size="8">ADR</text>
+  <text x="196" y="238" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="15" font-weight="700">$187</text>
+  <rect x="246" y="212" width="80" height="36" rx="5" fill="#161926"/>
+  <text x="286" y="224" text-anchor="middle" fill="#64748b" font-family="Inter,sans-serif" font-size="8">RevPAR</text>
+  <text x="286" y="238" text-anchor="middle" fill="#f59e0b" font-family="Inter,sans-serif" font-size="15" font-weight="700">$139</text>
+  <rect x="336" y="212" width="80" height="36" rx="5" fill="#161926"/>
+  <text x="376" y="224" text-anchor="middle" fill="#64748b" font-family="Inter,sans-serif" font-size="8">Revenue</text>
+  <text x="376" y="238" text-anchor="middle" fill="#f43f5e" font-family="Inter,sans-serif" font-size="15" font-weight="700">$4.2M</text>
+  <text x="66" y="256" fill="#64748b" font-family="Inter,sans-serif" font-size="10">Periodo: ene 2023 - dic 2024 | Fuente: hotel-service:8001</text>
+  <rect x="440" y="276" width="414" height="24" rx="8" fill="#6366f1"/>
+  <text x="634" y="292" text-anchor="middle" fill="#ffffff" font-family="Inter,sans-serif" font-size="11">Pronostica la ocupacion para los proximos 14 dias</text>
+  <circle cx="872" cy="288" r="14" fill="#6366f1" opacity="0.3" stroke="#6366f1" stroke-width="1"/>
+  <text x="872" y="293" text-anchor="middle" fill="#a5b4fc" font-family="Inter,sans-serif" font-size="10">Tu</text>
+  <circle cx="34" cy="334" r="14" fill="#1e2130" stroke="#6366f1" stroke-width="1"/>
+  <text x="34" y="339" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="12">AI</text>
+  <rect x="54" y="312" width="740" height="80" rx="8" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="66" y="328" fill="#10b981" font-family="Inter,sans-serif" font-size="11" font-weight="600">Pronostico de ocupacion — proximos 14 dias (GradientBoosting · MAE 3.8%)</text>
+  <path d="M66,372 L110,362 L154,355 L198,360 L242,350 L286,345 L330,352 L374,342 L418,348 L462,338 L506,344 L550,335 L594,341 L638,337 L638,380 L66,380 Z" fill="rgba(16,185,129,0.1)" stroke="none"/>
+  <path d="M66,372 L110,362 L154,355 L198,360 L242,350 L286,345 L330,352 L374,342 L418,348 L462,338 L506,344 L550,335 L594,341 L638,337" fill="none" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="638" cy="337" r="3" fill="#10b981"/>
+  <text x="660" y="342" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">D+14: 82.1%</text>
+  <text x="720" y="378" fill="#64748b" font-family="Inter,sans-serif" font-size="9">Modelo: analytics-service:8004 | Entrenado con 24 meses de datos</text>
+  <text x="54" y="414" fill="#475569" font-family="Inter,sans-serif" font-size="10">Sugerencias:</text>
+  <rect x="134" y="402" width="130" height="20" rx="10" fill="#1e2130" stroke="#6366f1" stroke-width="0.5"/><text x="199" y="416" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="10">Ventas restaurante</text>
+  <rect x="272" y="402" width="130" height="20" rx="10" fill="#1e2130" stroke="#6366f1" stroke-width="0.5"/><text x="337" y="416" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="10">Funnel inmobiliario</text>
+  <rect x="410" y="402" width="130" height="20" rx="10" fill="#1e2130" stroke="#6366f1" stroke-width="0.5"/><text x="475" y="416" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="10">Scoring de leads</text>
+  <rect x="548" y="402" width="100" height="20" rx="10" fill="#1e2130" stroke="#6366f1" stroke-width="0.5"/><text x="598" y="416" text-anchor="middle" fill="#818cf8" font-family="Inter,sans-serif" font-size="10">Ingresos ADR</text>
+  <rect x="16" y="438" width="868" height="44" rx="10" fill="#1e2130" stroke="#2d3148" stroke-width="0.5"/>
+  <text x="36" y="465" fill="#475569" font-family="Inter,sans-serif" font-size="12">Pregunta sobre hotel, restaurante, inmobiliaria o pronosticos...</text>
+  <rect x="838" y="448" width="36" height="26" rx="6" fill="#6366f1"/>
+  <text x="856" y="465" text-anchor="middle" fill="#ffffff" font-family="Inter,sans-serif" font-size="14">^</text>
+  <text x="450" y="497" text-anchor="middle" fill="#374151" font-family="Inter,sans-serif" font-size="9">8 intents · hotel · restaurant · realestate · forecast · NLP rule-based engine · FastAPI chatbot-service</text>
+</svg>
