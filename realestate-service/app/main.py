@@ -1,16 +1,19 @@
 from fastapi import FastAPI
-from .routers import funnel, units, projects
+from fastapi.middleware.cors import CORSMiddleware
+from .routers import funnel, units
 
 app = FastAPI(
-    title="OneView — Real Estate Service",
-    description="Leads, funnel de ventas y unidades del complejo inmobiliario",
-    version="1.0.0",
+    title="OneView Real Estate Service",
+    description="""## Real Estate Domain Microservice
+    
+    - **Funnel**: Lead to contract conversion analytics
+    - **Units**: Available, reserved and sold units by project
+    """,
+    version="1.0.0"
 )
-
-app.include_router(funnel.router,   prefix="/realestate/kpis",      tags=["KPIs"])
-app.include_router(units.router,    prefix="/realestate/units",      tags=["Units"])
-app.include_router(projects.router, prefix="/realestate/projects",   tags=["Projects"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.include_router(funnel.router, prefix="/realestate", tags=["Funnel"])
+app.include_router(units.router, prefix="/realestate", tags=["Units"])
 
 @app.get("/health")
-def health():
-    return {"status": "ok", "service": "realestate-service"}
+async def health(): return {"status": "healthy", "service": "realestate-service"}
