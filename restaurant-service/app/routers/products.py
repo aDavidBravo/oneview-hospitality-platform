@@ -1,63 +1,99 @@
+"""
+Restaurant Service - Products Router
+"""
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import text
+from typing import Optional
+
 from ..database import get_db
 
 router = APIRouter()
 
-@router.get("/top")
-def top_products(
-    period: str = Query(default="last_30_days", description="last_30_days | last_90_days | ytd"),
+
+@router.get("/kpis/top-products", summary="Top products by revenue")
+async def get_top_products(
+    period_days: int = Query(default=30, description="Look-back period in days"),
+    service_type: Optional[str] = Query(default=None),
+    limit: int = Query(default=10, le=50),
     db: Session = Depends(get_db)
 ):
-    period_filter = {
-        "last_30_days":  "ticket_date >= CURRENT_DATE - INTERVAL '30 days'",
-        "last_90_days":  "ticket_date >= CURRENT_DATE - INTERVAL '90 days'",
-        "ytd":           "EXTRACT(YEAR FROM ticket_date) = EXTRACT(YEAR FROM CURRENT_DATE)",
-    }.get(period, "ticket_date >= CURRENT_DATE - INTERVAL '30 days'")
-
-    rows = db.execute(text(f"""
-        SELECT m.name, m.category, m.sell_price, m.cost_price, m.margin_pct,
-               SUM(ti.quantity)::int               AS units_sold,
-               SUM(ti.line_total)::numeric(12,2)   AS total_revenue
+    filter_clause = ""
+    params = {'days': period_days, 'limit': limit}
+    if service_type:
+        filter_clause = "AND mi.service_type = :svc"
+        params['svc'] = service_type
+    
+    results = db.execute(text(f"""
+        SELECT 
+            mi.name,
+            mi.service_type,
+            mi.sale_price,
+            mi.cost_price,
+            mi.margin_pct,
+            COUNT(ti.id) as units_sold,
+            SUM(ti.total_price) as total_revenue
         FROM restaurant.ticket_items ti
-        JOIN restaurant.menu_items m ON m.id = ti.menu_item_id
-        JOIN restaurant.sales_tickets t ON t.id = ti.ticket_id
-        WHERE {period_filter}
-        GROUP BY m.id
-        ORDER BY units_sold DESC
-        LIMIT 20
+        JOIN restaurant.menu_items mi ON ti.menu_item_id = mi.id
+        JOIN restaurant.sales_tickets st ON ti.ticket_id = st.id
+        WHERE st.sale_datetime >= NOW() - INTERVAL '1 day' * :days
+        {filter_clause}
+        GROUP BY mi.id, mi.name, mi.service_type, mi.sale_price, mi.cost_price, mi.margin_pct
+        ORDER BY total_revenue DESC
+        LIMIT :limit
+    """), params).fetchall()
+    
+    # Fallback if no ticket_items yet (ticket_items requires extra generation step)
+    if not results:
+        results = db.execute(text("""
+            SELECT name, service_type, sale_price, cost_price, margin_pct,
+                   0 as units_sold, 0 as total_revenue
+            FROM restaurant.menu_items
+            WHERE active = true
+            ORDER BY margin_pct DESC
+            LIMIT :limit
+        """), {'limit': limit}).fetchall()
+    
+    return {
+        "period_days": period_days,
+        "products": [
+            {
+                "name": r.name,
+                "service_type": r.service_type,
+                "sale_price": float(r.sale_price),
+                "cost_price": float(r.cost_price),
+                "margin_pct": float(r.margin_pct or 0),
+                "units_sold": int(r.units_sold),
+                "total_revenue": round(float(r.total_revenue or 0), 2)
+            }
+            for r in results
+        ]
+    }
+
+
+@router.get("/menu", summary="Full menu with margin analysis")
+async def get_menu(db: Session = Depends(get_db)):
+    results = db.execute(text("""
+        SELECT mi.id, mc.name as category, mi.name, mi.sale_price, mi.cost_price,
+               mi.margin_pct, mi.service_type, mi.active
+        FROM restaurant.menu_items mi
+        JOIN restaurant.menu_categories mc ON mi.category_id = mc.id
+        ORDER BY mc.name, mi.margin_pct DESC
     """)).fetchall()
-    return [dict(r._mapping) for r in rows]
-
-
-@router.get("/margin-by-category")
-def margin_by_category(
-    start: str = Query(description="YYYY-MM-DD"),
-    end:   str = Query(description="YYYY-MM-DD"),
-    db: Session = Depends(get_db)
-):
-    rows = db.execute(text("""
-        SELECT m.category,
-               SUM(ti.quantity)::int             AS units_sold,
-               SUM(ti.line_total)::numeric(12,2) AS revenue,
-               AVG(m.margin_pct)::numeric(5,2)   AS avg_margin_pct
-        FROM restaurant.ticket_items ti
-        JOIN restaurant.menu_items m ON m.id = ti.menu_item_id
-        JOIN restaurant.sales_tickets t ON t.id = ti.ticket_id
-        WHERE t.ticket_date BETWEEN :s AND :e
-        GROUP BY m.category
-        ORDER BY revenue DESC
-    """), {"s": start, "e": end}).fetchall()
-    return [dict(r._mapping) for r in rows]
-
-
-@router.get("/inventory")
-def get_inventory(db: Session = Depends(get_db)):
-    rows = db.execute(text("""
-        SELECT ingredient, unit, stock_qty, min_stock, unit_cost,
-               CASE WHEN stock_qty <= min_stock THEN true ELSE false END AS low_stock
-        FROM restaurant.inventory
-        ORDER BY ingredient
-    """)).fetchall()
-    return [dict(r._mapping) for r in rows]
+    
+    return {
+        "total": len(results),
+        "items": [
+            {
+                "id": r.id,
+                "category": r.category,
+                "name": r.name,
+                "sale_price": float(r.sale_price),
+                "cost_price": float(r.cost_price),
+                "margin_pct": float(r.margin_pct or 0),
+                "service_type": r.service_type,
+                "active": r.active
+            }
+            for r in results
+        ]
+    }
