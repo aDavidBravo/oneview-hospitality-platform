@@ -1,0 +1,172 @@
+version: '3.9'
+
+networks:
+  oneview-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  models_data:
+
+services:
+
+  # ─── PostgreSQL ────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: oneview-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-oneview}
+      POSTGRES_USER: ${POSTGRES_USER:-oneview_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oneview_secret_2024}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./data-loader/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - oneview-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-oneview_user} -d ${POSTGRES_DB:-oneview}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Data Loader / ETL ─────────────────────────────────────
+  data-loader:
+    build: ./data-loader
+    container_name: oneview-data-loader
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-oneview}
+      POSTGRES_USER: ${POSTGRES_USER:-oneview_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oneview_secret_2024}
+      DATA_START_DATE: ${DATA_START_DATE:-2023-01-01}
+      DATA_END_DATE: ${DATA_END_DATE:-2024-12-31}
+      RANDOM_SEED: ${RANDOM_SEED:-42}
+    volumes:
+      - ./data-loader:/app
+      - ./data-loader/csv_output:/app/csv_output
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oneview-net
+    command: python generate_all.py
+
+  # ─── Hotel Service ──────────────────────────────────────────
+  hotel-service:
+    build: ./hotel-service
+    container_name: oneview-hotel
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      SERVICE_NAME: hotel-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oneview-net
+
+  # ─── Restaurant Service ─────────────────────────────────────
+  restaurant-service:
+    build: ./restaurant-service
+    container_name: oneview-restaurant
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      SERVICE_NAME: restaurant-service
+    ports:
+      - "8002:8002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oneview-net
+
+  # ─── Real Estate Service ────────────────────────────────────
+  realestate-service:
+    build: ./realestate-service
+    container_name: oneview-realestate
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      SERVICE_NAME: realestate-service
+    ports:
+      - "8003:8003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oneview-net
+
+  # ─── Analytics Service ──────────────────────────────────────
+  analytics-service:
+    build: ./analytics-service
+    container_name: oneview-analytics
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      MODELS_PATH: /app/models
+      FORECAST_HORIZON_DAYS: ${FORECAST_HORIZON_DAYS:-14}
+    volumes:
+      - models_data:/app/models
+    ports:
+      - "8004:8004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oneview-net
+
+  # ─── Chatbot Service ────────────────────────────────────────
+  chatbot-service:
+    build: ./chatbot-service
+    container_name: oneview-chatbot
+    restart: unless-stopped
+    environment:
+      HOTEL_SERVICE_URL: http://hotel-service:8001
+      RESTAURANT_SERVICE_URL: http://restaurant-service:8002
+      REALESTATE_SERVICE_URL: http://realestate-service:8003
+      ANALYTICS_SERVICE_URL: http://analytics-service:8004
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "8005:8005"
+    depends_on:
+      - hotel-service
+      - restaurant-service
+      - realestate-service
+      - analytics-service
+    networks:
+      - oneview-net
+
+  # ─── Gateway API (Nginx) ────────────────────────────────────
+  gateway-api:
+    build: ./gateway-api
+    container_name: oneview-gateway
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    depends_on:
+      - hotel-service
+      - restaurant-service
+      - realestate-service
+      - analytics-service
+      - chatbot-service
+    networks:
+      - oneview-net
+
+  # ─── Dashboard UI (static) ──────────────────────────────────
+  dashboard-ui:
+    image: nginx:alpine
+    container_name: oneview-dashboard
+    restart: unless-stopped
+    volumes:
+      - ./dashboard-ui:/usr/share/nginx/html:ro
+    ports:
+      - "3000:80"
+    networks:
+      - oneview-net
