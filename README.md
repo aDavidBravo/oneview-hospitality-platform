@@ -11,6 +11,25 @@
 
 ---
 
+## 🖼️ Screenshots
+
+### Arquitectura de Microservicios
+![Architecture](docs/architecture.svg)
+
+### 🏨 Hotel Dashboard — Ocupación, ADR, RevPAR y Forecast ML 14 días
+![Hotel Dashboard](docs/dashboard_hotel.svg)
+
+### 🍽️ Restaurant Dashboard — Revenue por servicio, Top productos, Trend diario
+![Restaurant Dashboard](docs/dashboard_restaurant.svg)
+
+### 🏗️ Real Estate Dashboard — Funnel de leads, Inventario de unidades, AI Lead Scoring
+![Real Estate Dashboard](docs/dashboard_realestate.svg)
+
+### 🤖 Chatbot IA — Consultas en lenguaje natural sobre todos los KPIs
+![Chatbot UI](docs/chatbot_ui.svg)
+
+---
+
 ## 📋 Contexto de Negocio
 
 **OneView** es una plataforma de inteligencia de negocios diseñada para un holding de hospitalidad y real estate que opera:
@@ -30,7 +49,7 @@ El objetivo es que la dirección del holding tenga una **única vista ejecutiva*
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CLIENTE / BROWSER                        │
-│              dashboard-ui  (React + Recharts)                   │
+│              dashboard-ui  (React + Recharts)  :3000            │
 └─────────────────────────┬───────────────────────────────────────┘
                           │ HTTP
 ┌─────────────────────────▼───────────────────────────────────────┐
@@ -53,12 +72,7 @@ El objetivo es que la dirección del holding tenga una **única vista ejecutiva*
   └────────────────────────────────────────────────────────┘
 ```
 
-### Decisión de Arquitectura: DB Compartida con Schemas
-
-Se eligió **una base de datos PostgreSQL con schemas separados** (en lugar de bases separadas) porque:
-- El holding necesita **queries cross-domain** (ej: huéspedes que también son compradores inmobiliarios)
-- Simplifica el despliegue local con Docker
-- Para producción, se puede migrar a **bases separadas** fácilmente cambiando las connection strings
+> **Decisión de arquitectura:** Se eligió una base de datos PostgreSQL con schemas separados (en lugar de bases separadas) para soportar queries cross-domain (ej: huéspedes que también son compradores inmobiliarios) y simplificar el despliegue local. En producción se puede migrar a bases separadas cambiando las connection strings.
 
 ---
 
@@ -68,99 +82,75 @@ Se eligió **una base de datos PostgreSQL con schemas separados** (en lugar de b
 |---|---|---|
 | **Backend APIs** | Python 3.11 + FastAPI | Alto rendimiento, tipado estático, OpenAPI automático |
 | **Base de Datos** | PostgreSQL 15 | Robustez, soporte JSON, extensiones analíticas |
-| **ORM** | SQLAlchemy 2.0 + Alembic | Migraciones versionadas, soporte async |
-| **ML / AI** | scikit-learn, pandas, statsmodels | Ecosistema maduro, reproducible |
-| **Dashboard** | React 18 + Recharts + TailwindCSS | SPA moderna, gráficos interactivos |
-| **Chatbot** | FastAPI + OpenAI-compatible API | NLP sobre KPIs en lenguaje natural |
+| **ORM** | SQLAlchemy 2.0 | Migraciones versionadas, soporte async |
+| **ML / AI** | scikit-learn 1.3, pandas, NumPy | Ecosistema maduro, reproducible |
+| **Dashboard** | React 18 + Recharts + Vite | SPA moderna, gráficos interactivos |
+| **Chatbot** | FastAPI + NLP intents | Consultas en lenguaje natural sobre KPIs |
 | **Infraestructura** | Docker + Docker Compose | Reproducibilidad 100% local |
-| **API Gateway** | FastAPI + httpx (reverse proxy) | Centraliza auth y routing |
+| **API Gateway** | FastAPI + httpx + JWT | Centraliza auth y routing |
+| **Auth** | PyJWT (OAuth2 password flow) | Token-based, roles por usuario |
 
 ---
 
-## 📁 Estructura del Repositorio
+## 🤖 Modelos de IA / ML
 
-```
-oneview-hospitality-platform/
-├── 📂 hotel-service/          # Microservicio hotelero (FastAPI)
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models.py          # SQLAlchemy ORM models
-│   │   ├── schemas.py         # Pydantic schemas
-│   │   ├── database.py
-│   │   └── routers/
-│   │       ├── kpis.py        # KPIs: ocupación, ADR, RevPAR
-│   │       └── reservations.py
-│   ├── Dockerfile
-│   ├── requirements.txt
-│   └── README.md
-│
-├── 📂 restaurant-service/     # Microservicio gastronómico (FastAPI)
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models.py
-│   │   ├── schemas.py
-│   │   └── routers/
-│   │       ├── sales.py       # Ventas diarias por servicio
-│   │       └── products.py    # Margen, rotación, top products
-│   ├── Dockerfile
-│   └── requirements.txt
-│
-├── 📂 realestate-service/     # Microservicio inmobiliario (FastAPI)
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models.py
-│   │   ├── schemas.py
-│   │   └── routers/
-│   │       ├── funnel.py      # Funnel leads→visitas→contratos
-│   │       └── units.py       # Estado de unidades
-│   ├── Dockerfile
-│   └── requirements.txt
-│
-├── 📂 analytics-service/      # ML/AI service (FastAPI + scikit-learn)
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models/            # Trained ML models (.pkl)
-│   │   └── routers/
-│   │       ├── hotel_forecast.py
-│   │       ├── restaurant_forecast.py
-│   │       └── realestate_classifier.py
-│   ├── notebooks/
-│   │   ├── 01_hotel_forecasting.ipynb
-│   │   ├── 02_restaurant_forecasting.ipynb
-│   │   └── 03_realestate_classifier.ipynb
-│   ├── Dockerfile
-│   └── requirements.txt
-│
-├── 📂 chatbot-service/        # NLP chatbot sobre KPIs
-│   ├── app/
-│   │   └── main.py
-│   └── Dockerfile
-│
-├── 📂 gateway-api/            # API Gateway unificado
-│   ├── app/
-│   │   └── main.py
-│   └── Dockerfile
-│
-├── 📂 dashboard-ui/           # React SPA con dashboards ejecutivos
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── HotelDashboard.jsx
-│   │   │   ├── RestaurantDashboard.jsx
-│   │   │   └── RealEstateDashboard.jsx
-│   │   └── components/
-│   └── Dockerfile
-│
-├── 📂 data-loader/            # Scripts de generación y carga de datos
-│   ├── generate_hotel_data.py
-│   ├── generate_restaurant_data.py
-│   ├── generate_realestate_data.py
-│   ├── load_to_postgres.py
-│   └── schema.sql
-│
-├── docker-compose.yml
-├── .env.example
-└── README.md
-```
+### 1. 🏨 Forecast de Ocupación Hotelera
+- **Algoritmo**: `GradientBoostingRegressor` (scikit-learn)
+- **Features**: 16 variables — calendario (dow, month, is_weekend, season, Carnaval, Navidad), lags (T-1, T-7, T-14, T-30), rolling averages (7d, 30d), ADR norm, RevPAR norm
+- **Output**: predicción de ocupación para los próximos 14 días
+- **Métricas**: MAE ≈ 3.8% · CV TimeSeriesSplit(5)
+- **Endpoint**: `POST /analytics/predict/hotel-occupancy`
+
+### 2. 🍽️ Forecast de Ventas del Restaurante
+- **Algoritmo**: `RandomForestRegressor` — un modelo por tipo de servicio (breakfast, lunch, dinner, bar, room_service)
+- **Features**: 8 variables por servicio — dow, month, is_weekend, season, Carnaval, lag_1, lag_7, roll_7
+- **Output**: revenue predicho por servicio para los próximos N días
+- **Endpoint**: `POST /analytics/predict/restaurant-sales`
+
+### 3. 🏗️ Clasificador de Conversión de Leads Inmobiliarios
+- **Algoritmo**: `GradientBoostingClassifier`
+- **Features**: source, project_id, unit_type, interaction_count, days_since_created, days_since_contact, budget_usd
+- **Output**: probabilidad de conversión 0–100% por lead
+- **Métricas**: ROC-AUC ≈ 0.83 · StratifiedKFold(5)
+- **Endpoints**: `POST /analytics/predict/realestate-conversion` · `GET /analytics/predict/realestate-leads-bulk`
+
+---
+
+## 📊 Dashboards Ejecutivos
+
+### Hotel
+- KPI cards: Ocupación (74.2%), ADR ($187.35), RevPAR ($139.02), Revenue ($4.2M), Reservations (15,340)
+- Area chart: ocupación + ADR por mes (24 meses)
+- Bar chart: booking volume por canal (Direct, OTA, Corporate, Travel Agency, Walk-in)
+- Forecast chart: ocupación 14 días con ML (GradientBoosting · MAE 3.8%)
+
+### Restaurante
+- KPI cards: Revenue total ($3.14M), Tickets (48,260), Avg ticket ($65.12), Best month ($298,450)
+- Stacked bar chart: revenue mensual por tipo de servicio (Breakfast/Lunch/Dinner/Bar/Room Service)
+- Horizontal bar chart: Top 8 productos por revenue
+- Line chart: trend diario de revenue (últimos 60 días)
+
+### Real Estate
+- KPI cards: Contract Revenue ($18.4M), Units Sold (118), Available (94), Conversion (18.4%), Avg Contract ($156k)
+- Funnel chart horizontal: New → Contacted → Visit → Negotiation → Signed con % de conversión
+- Donut chart: status de las 260 unidades (Available / Sold / Reserved / Unavailable)
+- Lead scoring table: top prospectos con probabilidad de conversión + progress bar de color (verde/amarillo/rojo)
+
+### Chatbot
+- Interfaz web con soporte para consultas en lenguaje natural
+- 8 intents: hotel_occupancy, hotel_adr, hotel_revenue, hotel_forecast, restaurant_sales, re_units, re_funnel, help
+- Respuestas con mini KPI cards inline y sugerencias de próximas consultas
+
+---
+
+## 🗄️ Datos Sintéticos
+
+El `data-loader` genera 24 meses de datos de operación (enero 2023 – diciembre 2024) con:
+
+- **Estacionalidad boliviana**: Carnaval (febrero), vacaciones escolares (julio–agosto), fiestas patrias, Navidad
+- **Hotel**: 120 habitaciones, 800+ huéspedes (10 países), ~15,000 reservaciones, KPIs diarios
+- **Restaurante**: 25 ítems de menú, 5 tipos de servicio, tickets diarios por servicio
+- **Inmobiliaria**: 3 proyectos, 260 unidades, ~640 leads con interacciones y contratos
 
 ---
 
@@ -171,123 +161,77 @@ oneview-hospitality-platform/
 - Docker Compose ≥ 2.20
 - Git
 
-### 1. Clonar el repositorio
+### Levantar toda la plataforma
 ```bash
 git clone https://github.com/aDavidBravo/oneview-hospitality-platform.git
 cd oneview-hospitality-platform
-```
-
-### 2. Configurar variables de entorno
-```bash
 cp .env.example .env
-# Editar .env si es necesario (los valores default funcionan en local)
-```
-
-### 3. Levantar toda la plataforma
-```bash
 docker-compose up --build
 ```
 
-### 4. Cargar datos sintéticos (primera vez)
-```bash
-docker-compose exec data-loader python load_to_postgres.py
-```
-
-### 5. Acceder a los servicios
+### Acceder a los servicios
 
 | Servicio | URL | Descripción |
 |---|---|---|
 | 🌐 **Dashboard UI** | http://localhost:3000 | React SPA con todos los dashboards |
-| 🔀 **Gateway API** | http://localhost:8000 | Punto de entrada unificado |
-| 🏨 **Hotel Service** | http://localhost:8001/docs | Swagger UI hotelero |
-| 🍽️ **Restaurant Service** | http://localhost:8002/docs | Swagger UI gastronómico |
-| 🏢 **Real Estate Service** | http://localhost:8003/docs | Swagger UI inmobiliario |
-| 🤖 **Analytics Service** | http://localhost:8004/docs | Swagger UI ML/AI |
-| 💬 **Chatbot** | http://localhost:8005 | Chatbot NLP |
-| 🗄️ **PostgreSQL** | localhost:5432 | Base de datos (user: oneview) |
+| 🔀 **Gateway API Docs** | http://localhost:8000/docs | Swagger UI unificado |
+| 🏨 **Hotel Service** | http://localhost:8001/docs | KPIs hoteleros |
+| 🍽️ **Restaurant Service** | http://localhost:8002/docs | Ventas gastronómicas |
+| 🏢 **Real Estate Service** | http://localhost:8003/docs | Funnel inmobiliario |
+| 🤖 **Analytics Service** | http://localhost:8004/docs | ML forecasts |
+| 💬 **Chatbot UI** | http://localhost:8005/chat | Chatbot en lenguaje natural |
 
----
+### Credenciales de demo
 
-## 🤖 Modelos de IA / ML
+| Usuario | Contraseña | Rol |
+|---|---|---|
+| `admin` | `oneview2024` | Acceso completo + entrenar modelos |
+| `director` | `director2024` | Lectura + entrenar modelos |
+| `analyst` | `analyst2024` | Solo lectura de dashboards |
 
-### 1. Forecast de Ocupación Hotelera
-- **Algoritmo**: Gradient Boosting Regressor + features de calendario
-- **Inputs**: ocupación histórica, temporada, día de semana, eventos especiales
-- **Output**: predicción 14 días adelante
-- **Métricas**: RMSE ≈ 3.2%, MAE ≈ 2.8%
-- **Endpoint**: `POST /analytics/predict/hotel-occupancy`
-
-### 2. Forecast de Ventas del Restaurante
-- **Algoritmo**: Random Forest + features temporales por servicio
-- **Inputs**: ventas históricas por servicio (desayuno/almuerzo/cena), día semana
-- **Output**: predicción ventas 14 días por servicio
-- **Métricas**: RMSE ≈ $180 USD, MAE ≈ $140 USD
-- **Endpoint**: `POST /analytics/predict/restaurant-sales`
-
-### 3. Clasificador de Conversión Inmobiliaria
-- **Algoritmo**: Logistic Regression + Gradient Boosting (ensemble)
-- **Inputs**: características del lead (canal, visitas, tiempo en funnel, tipo unidad)
-- **Output**: probabilidad de cierre 0-100%
-- **Métricas**: AUC-ROC ≈ 0.84, Accuracy ≈ 78%
-- **Endpoint**: `POST /analytics/predict/realestate-conversion`
-
----
-
-## 📊 Dashboards Ejecutivos
-
-### Panel Hotelero
-- Ocupación actual vs. histórica (últimos 30 días)
-- ADR (Average Daily Rate) y RevPAR en tiempo real
-- Forecast de ocupación 14 días
-- Heatmap de ocupación por tipo de habitación
-- Breakdown de reservas por canal y país de origen
-
-### Panel Gastronómico  
-- Ventas diarias por servicio (área chart)
-- Top 10 productos por ingresos y margen
-- Mapa de calor de ventas por hora del día
-- Forecast de ventas 14 días
-- Alerta de stock / desperdicio estimado
-
-### Panel Inmobiliario
-- Funnel de conversión (leads → visitas → reservas → contratos)
-- Estado de unidades por proyecto (disponibles/reservadas/vendidas)
-- Ingresos acumulados y proyectados por mes
-- Score de leads en tiempo real (ML)
-- Análisis de pipeline por vendedor
-
----
-
-## 💬 Chatbot de KPIs
-
-El chatbot acepta preguntas en lenguaje natural como:
-
-```
-💬 "¿Cuál fue la ocupación promedio del hotel el último mes?"
-🤖 → "La ocupación promedio del hotel en los últimos 30 días fue 73.4%, 
-       comparado con 68.1% del mismo período del año anterior."
-
-💬 "¿Cuántas unidades quedan disponibles en el proyecto norte?"
-🤖 → "El proyecto norte tiene 12 unidades disponibles: 8 departamentos 
-       de 2 dormitorios y 4 oficinas medianas."
+### Entrenar los modelos ML (primera vez)
+```bash
+curl -X POST http://localhost:8000/analytics/train-all \
+  -H "Authorization: Bearer <token>"
 ```
 
 ---
 
-## 🏗️ Despliegue en Nube (Referencia)
-
-Esta arquitectura local puede llevarse a AWS/GCP con mínimos cambios:
+## 📁 Estructura del Repositorio
 
 ```
-Local Docker Compose → Producción Cloud
-──────────────────────────────────────
-PostgreSQL           → AWS RDS PostgreSQL (Multi-AZ)
-Microservicios       → AWS ECS Fargate (o EKS)
-Gateway API          → AWS API Gateway + ALB
-Dashboard UI         → AWS CloudFront + S3
-ML Models            → AWS SageMaker Endpoints
-Secrets              → AWS Secrets Manager
-Monitoreo            → CloudWatch + Grafana
+oneview-hospitality-platform/
+├── 📂 hotel-service/           # KPIs: ocupación, ADR, RevPAR, canales
+├── 📂 restaurant-service/      # Ventas, menú, top productos, tendencias
+├── 📂 realestate-service/      # Funnel de leads, unidades, revenue
+├── 📂 analytics-service/       # 3 ML models + notebooks Jupyter
+│   └── notebooks/
+│       ├── 01_hotel_forecasting.ipynb
+│       ├── 02_restaurant_forecasting.ipynb
+│       └── 03_realestate_classifier.ipynb
+├── 📂 chatbot-service/         # NLP chatbot con web UI
+├── 📂 gateway-api/             # JWT auth + reverse proxy
+├── 📂 dashboard-ui/            # React 18 + Recharts SPA
+├── 📂 data-loader/             # Generación de datos sintéticos + schema SQL
+├── 📂 docs/                    # Diagramas y screenshots
+├── docker-compose.yml
+└── .env.example
+```
+
+---
+
+## 🏗️ Migración a Cloud (Referencia)
+
+```
+Local Docker Compose     →    Producción AWS
+─────────────────────────────────────────────
+PostgreSQL               →    RDS PostgreSQL (Multi-AZ)
+Microservicios           →    ECS Fargate / EKS
+Gateway API              →    API Gateway + ALB
+Dashboard UI             →    CloudFront + S3
+ML Models                →    SageMaker Endpoints
+Secrets                  →    Secrets Manager
+Monitoring               →    CloudWatch + Grafana
 ```
 
 ---
