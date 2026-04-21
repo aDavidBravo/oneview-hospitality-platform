@@ -1,172 +1,235 @@
 version: '3.9'
 
 networks:
-  oneview-net:
+  oneview-network:
     driver: bridge
 
 volumes:
   postgres_data:
-  models_data:
+    driver: local
+  ml_models:
+    driver: local
 
 services:
 
-  # ─── PostgreSQL ────────────────────────────────────────────
+  # =============================================
+  # DATABASE
+  # =============================================
   postgres:
     image: postgres:15-alpine
     container_name: oneview-postgres
-    restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-oneview}
-      POSTGRES_USER: ${POSTGRES_USER:-oneview_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oneview_secret_2024}
+      POSTGRES_USER: ${POSTGRES_USER:-oneview}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oneview_secure_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-oneview_db}
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./data-loader/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
-    ports:
-      - "5432:5432"
     networks:
-      - oneview-net
+      - oneview-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-oneview_user} -d ${POSTGRES_DB:-oneview}"]
+      test: ["CMD-SHELL", "pg_isready -U oneview -d oneview_db"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
-  # ─── Data Loader / ETL ─────────────────────────────────────
+  # =============================================
+  # DATA LOADER (runs once to seed data)
+  # =============================================
   data-loader:
-    build: ./data-loader
+    build:
+      context: ./data-loader
+      dockerfile: Dockerfile
     container_name: oneview-data-loader
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: ${POSTGRES_DB:-oneview}
-      POSTGRES_USER: ${POSTGRES_USER:-oneview_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oneview_secret_2024}
-      DATA_START_DATE: ${DATA_START_DATE:-2023-01-01}
-      DATA_END_DATE: ${DATA_END_DATE:-2024-12-31}
-      RANDOM_SEED: ${RANDOM_SEED:-42}
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
     volumes:
       - ./data-loader:/app
-      - ./data-loader/csv_output:/app/csv_output
+    networks:
+      - oneview-network
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - oneview-net
-    command: python generate_all.py
+    command: ["python", "load_to_postgres.py"]
+    restart: "no"
 
-  # ─── Hotel Service ──────────────────────────────────────────
+  # =============================================
+  # HOTEL SERVICE
+  # =============================================
   hotel-service:
-    build: ./hotel-service
+    build:
+      context: ./hotel-service
+      dockerfile: Dockerfile
     container_name: oneview-hotel
-    restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
       SERVICE_NAME: hotel-service
+      LOG_LEVEL: INFO
     ports:
       - "8001:8001"
+    networks:
+      - oneview-network
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - oneview-net
-
-  # ─── Restaurant Service ─────────────────────────────────────
-  restaurant-service:
-    build: ./restaurant-service
-    container_name: oneview-restaurant
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================
+  # RESTAURANT SERVICE
+  # =============================================
+  restaurant-service:
+    build:
+      context: ./restaurant-service
+      dockerfile: Dockerfile
+    container_name: oneview-restaurant
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
       SERVICE_NAME: restaurant-service
+      LOG_LEVEL: INFO
     ports:
       - "8002:8002"
+    networks:
+      - oneview-network
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - oneview-net
-
-  # ─── Real Estate Service ────────────────────────────────────
-  realestate-service:
-    build: ./realestate-service
-    container_name: oneview-realestate
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================
+  # REAL ESTATE SERVICE
+  # =============================================
+  realestate-service:
+    build:
+      context: ./realestate-service
+      dockerfile: Dockerfile
+    container_name: oneview-realestate
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
       SERVICE_NAME: realestate-service
+      LOG_LEVEL: INFO
     ports:
       - "8003:8003"
+    networks:
+      - oneview-network
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - oneview-net
-
-  # ─── Analytics Service ──────────────────────────────────────
-  analytics-service:
-    build: ./analytics-service
-    container_name: oneview-analytics
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================
+  # ANALYTICS SERVICE (ML/AI)
+  # =============================================
+  analytics-service:
+    build:
+      context: ./analytics-service
+      dockerfile: Dockerfile
+    container_name: oneview-analytics
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-oneview_user}:${POSTGRES_PASSWORD:-oneview_secret_2024}@postgres:5432/${POSTGRES_DB:-oneview}
-      MODELS_PATH: /app/models
-      FORECAST_HORIZON_DAYS: ${FORECAST_HORIZON_DAYS:-14}
-    volumes:
-      - models_data:/app/models
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
+      SERVICE_NAME: analytics-service
+      MODEL_PATH: /app/models
+      LOG_LEVEL: INFO
     ports:
       - "8004:8004"
+    volumes:
+      - ml_models:/app/models
+    networks:
+      - oneview-network
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - oneview-net
-
-  # ─── Chatbot Service ────────────────────────────────────────
-  chatbot-service:
-    build: ./chatbot-service
-    container_name: oneview-chatbot
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================
+  # CHATBOT SERVICE
+  # =============================================
+  chatbot-service:
+    build:
+      context: ./chatbot-service
+      dockerfile: Dockerfile
+    container_name: oneview-chatbot
+    environment:
+      DATABASE_URL: postgresql://oneview:oneview_secure_2024@postgres:5432/oneview_db
+      HOTEL_SERVICE_URL: http://hotel-service:8001
+      RESTAURANT_SERVICE_URL: http://restaurant-service:8002
+      REALESTATE_SERVICE_URL: http://realestate-service:8003
+      ANALYTICS_SERVICE_URL: http://analytics-service:8004
+      LOG_LEVEL: INFO
+    ports:
+      - "8005:8005"
+    networks:
+      - oneview-network
+    depends_on:
+      - hotel-service
+      - restaurant-service
+      - realestate-service
+      - analytics-service
+    restart: unless-stopped
+
+  # =============================================
+  # API GATEWAY
+  # =============================================
+  gateway-api:
+    build:
+      context: ./gateway-api
+      dockerfile: Dockerfile
+    container_name: oneview-gateway
     environment:
       HOTEL_SERVICE_URL: http://hotel-service:8001
       RESTAURANT_SERVICE_URL: http://restaurant-service:8002
       REALESTATE_SERVICE_URL: http://realestate-service:8003
       ANALYTICS_SERVICE_URL: http://analytics-service:8004
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      CHATBOT_SERVICE_URL: http://chatbot-service:8005
+      JWT_SECRET: ${JWT_SECRET:-oneview_jwt_secret_change_in_prod}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
     ports:
-      - "8005:8005"
+      - "8000:8000"
+    networks:
+      - oneview-network
     depends_on:
       - hotel-service
       - restaurant-service
       - realestate-service
       - analytics-service
-    networks:
-      - oneview-net
-
-  # ─── Gateway API (Nginx) ────────────────────────────────────
-  gateway-api:
-    build: ./gateway-api
-    container_name: oneview-gateway
     restart: unless-stopped
-    ports:
-      - "8000:80"
-    depends_on:
-      - hotel-service
-      - restaurant-service
-      - realestate-service
-      - analytics-service
-      - chatbot-service
-    networks:
-      - oneview-net
 
-  # ─── Dashboard UI (static) ──────────────────────────────────
+  # =============================================
+  # DASHBOARD UI (React)
+  # =============================================
   dashboard-ui:
-    image: nginx:alpine
+    build:
+      context: ./dashboard-ui
+      dockerfile: Dockerfile
     container_name: oneview-dashboard
-    restart: unless-stopped
-    volumes:
-      - ./dashboard-ui:/usr/share/nginx/html:ro
+    environment:
+      REACT_APP_API_URL: http://localhost:8000
     ports:
       - "3000:80"
     networks:
-      - oneview-net
+      - oneview-network
+    depends_on:
+      - gateway-api
+    restart: unless-stopped
