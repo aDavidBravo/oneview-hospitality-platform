@@ -5,33 +5,56 @@ from ..database import get_db
 
 router = APIRouter()
 
-@router.get("/")
-def get_rooms(db: Session = Depends(get_db)):
-    rows = db.execute(text("""
-        SELECT r.id, r.room_number, r.room_type, r.capacity, r.base_rate, r.floor, r.is_active,
-               COUNT(res.id) AS total_reservations
+@router.get("/rooms", summary="List all rooms with type info")
+async def get_rooms(db: Session = Depends(get_db)):
+    results = db.execute(text("""
+        SELECT r.id, r.room_number, r.floor, r.status,
+               rt.code, rt.name, rt.capacity, rt.base_rate
         FROM hotel.rooms r
-        LEFT JOIN hotel.reservations res ON res.room_id = r.id
-        GROUP BY r.id
+        JOIN hotel.room_types rt ON r.room_type_id = rt.id
         ORDER BY r.room_number
     """)).fetchall()
-    return [dict(r._mapping) for r in rows]
+    
+    return {
+        "total": len(results),
+        "rooms": [
+            {
+                "id": r.id,
+                "room_number": r.room_number,
+                "floor": r.floor,
+                "status": r.status,
+                "type_code": r.code,
+                "type_name": r.name,
+                "capacity": r.capacity,
+                "base_rate": float(r.base_rate)
+            }
+            for r in results
+        ]
+    }
 
-@router.get("/availability")
-def room_availability(
-    checkin: str,
-    checkout: str,
-    db: Session = Depends(get_db)
-):
-    rows = db.execute(text("""
-        SELECT r.id, r.room_number, r.room_type, r.base_rate, r.capacity
-        FROM hotel.rooms r
-        WHERE r.is_active = TRUE
-          AND r.id NOT IN (
-              SELECT room_id FROM hotel.reservations
-              WHERE status NOT IN ('cancelled', 'checked_out')
-                AND checkin_date < :co AND checkout_date > :ci
-          )
-        ORDER BY r.base_rate
-    """), {"ci": checkin, "co": checkout}).fetchall()
-    return [dict(r._mapping) for r in rows]
+@router.get("/rooms/availability", summary="Room availability summary by type")
+async def get_room_availability(db: Session = Depends(get_db)):
+    results = db.execute(text("""
+        SELECT rt.name, rt.code, rt.base_rate,
+               COUNT(r.id) as total,
+               SUM(CASE WHEN r.status = 'available' THEN 1 ELSE 0 END) as available,
+               SUM(CASE WHEN r.status = 'occupied' THEN 1 ELSE 0 END) as occupied
+        FROM hotel.room_types rt
+        LEFT JOIN hotel.rooms r ON r.room_type_id = rt.id
+        GROUP BY rt.id, rt.name, rt.code, rt.base_rate
+        ORDER BY rt.base_rate
+    """)).fetchall()
+    
+    return {
+        "summary": [
+            {
+                "type_code": r.code,
+                "type_name": r.name,
+                "base_rate": float(r.base_rate),
+                "total_rooms": r.total,
+                "available": r.available,
+                "occupied": r.occupied
+            }
+            for r in results
+        ]
+    }
